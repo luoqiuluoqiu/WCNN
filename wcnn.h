@@ -7,7 +7,7 @@ using namespace std;
 //定义WMat结构体
 class CDataBlob{
 public:
-    vector<vector<vector<vector<float>>>>data_float;
+    vector<vector<vector<vector<double>>>>data_float;
 
     int height;
     int width;
@@ -61,7 +61,7 @@ bool setDataFromImage( )
 };
 
 //bias参数
-typedef vector<float> Cbias;
+typedef vector<double> Cbias;
 
 //卷积参数
 typedef struct covFilters {
