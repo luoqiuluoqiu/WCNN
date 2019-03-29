@@ -19,7 +19,7 @@ bool convolution(CDataBlob *inputData, CDataBlob *weight, covFilters *filters, C
                 for(auto k=0;k<weight->width;k++)
                     nweight.data_float[h][i][j+j*(filters->dilation_dH-1)][k+k*(filters->dilation_dW-1)]=weight->data_float[h][i][j][k];
 
-    //卷积运算  group
+    //卷积运算
     for(auto h=0;h<outputData->batchsize;h++)
         for(auto i=0;i<outputData->channels;i++)
             for(auto j=0;j<outputData->height;j++)
@@ -70,11 +70,6 @@ bool Conv2d(CDataBlob *inputData, CDataBlob *weight, Cbias *bias, covFilters *fi
     return  true;
 }
 
-bool ReLU(CDataBlob *inputData, CDataBlob *outputData)
-{
-
-}
-
 bool ReLU(CDataBlob *inputData, int typeL, CDataBlob *outputData)
 {
     if(typeL==0){
@@ -103,4 +98,17 @@ bool ReLU(CDataBlob *inputData, int typeL, CDataBlob *outputData)
                 }
             }
     }
+}
+
+bool Linear(CDataBlob *inputData, CDataBlob *weight, Cbias *bias, CDataBlob *outputData)
+{
+    for (auto i =0;i<outputData->batchsize;i++)
+        for(auto j=0;j<outputData->in_features;j++){
+            for(auto k=0;k<inputData->in_features;k++)
+            {
+                outputData->dense_float[i][j]+=inputData->dense_float[i][k]*weight->dense_float[j][k];
+            }
+        outputData->dense_float[i][j]+=bias->at(j);
+        }
+    return true;
 }

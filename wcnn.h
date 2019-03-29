@@ -111,7 +111,7 @@ bool Conv2d(CDataBlob *inputData, CDataBlob *weight,Cbias *bias,covFilters *filt
 bool ReLU(CDataBlob *inputData,int typeL,CDataBlob *outputData);
 //待实现
 bool MaxPool2d(CDataBlob *inputData,maxFilters *filters, CDataBlob *outputData);
-bool Linear();
+bool Linear(CDataBlob *inputData, CDataBlob *weight,Cbias *bias, CDataBlob *outputData);
 
 
 bool ConvTranspose2d();
@@ -123,7 +123,6 @@ bool RNN();
 bool LSTM();
 bool GRU();
 bool Embedding();
-
 bool Sigmoid();
 
 
