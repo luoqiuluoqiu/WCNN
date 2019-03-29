@@ -69,3 +69,38 @@ bool Conv2d(CDataBlob *inputData, CDataBlob *weight, Cbias *bias, covFilters *fi
     }
     return  true;
 }
+
+bool ReLU(CDataBlob *inputData, CDataBlob *outputData)
+{
+
+}
+
+bool ReLU(CDataBlob *inputData, int typeL, CDataBlob *outputData)
+{
+    if(typeL==0){
+        for(auto h=0;h<inputData->batchsize;h++)
+            for(auto i=0;i<inputData->channels;i++)
+                for(auto j=0;j<inputData->height;j++)
+                    for(auto k=0;k<inputData->width;k++)
+                    {
+                        if (inputData->data_float[h][i][j][k]<0){
+                            outputData->data_float[h][i][j][k]=0;
+                        }
+                        else{
+                            outputData->data_float[h][i][j][k]=inputData->data_float[h][i][j][k];
+                        }
+                    }
+    }
+    else if (typeL==1) {
+        for(auto j=0;j<inputData->out_features;j++)
+            for(auto k=0;k<inputData->in_features;k++)
+            {
+                if (inputData->dense_float[j][k]<0){
+                    outputData->dense_float[j][k]=0;
+                }
+                else{
+                    outputData->dense_float[j][k]=inputData->dense_float[j][k];
+                }
+            }
+    }
+}

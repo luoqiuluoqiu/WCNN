@@ -7,14 +7,20 @@ using namespace std;
 //定义WMat结构体
 class CDataBlob{
 public:
-    vector<vector<vector<vector<double>>>>data_float;
+    //公共变量
+    int batchsize;
 
+    vector<vector<double>>dense_float;//全链接数据
+    //dense格式
+    int out_features;
+    int in_features;
+
+    vector<vector<vector<vector<double>>>>data_float;//图像数据
+    //宽高
     int height;
     int width;
-    //数据格式
-    int batchsize;
+    //图像数据格式
     int channels;
-
     //权重格式
     int outc;
     int inc;
@@ -30,7 +36,18 @@ public:
         this->inc=0;
         this->data_float.clear();
     }
-    //
+    //nn.Line
+    CDataBlob(int out ,int in) {
+        this->data_float.clear();
+        this->batchsize=this->out_features=out;
+        this->in_features=in;
+        this->dense_float.resize(out);
+        for(auto k=0;k<out;k++)
+        {
+            this->dense_float[k].resize(in);
+        }
+    }
+    //nn.Cov
     CDataBlob(int n,int c,int h,int w)
     {
         this->data_float.clear();
@@ -91,8 +108,11 @@ typedef struct maxFilters {
 //定义常见的计算
 //已经实现
 bool Conv2d(CDataBlob *inputData, CDataBlob *weight,Cbias *bias,covFilters *filters, CDataBlob *outputData);
+bool ReLU(CDataBlob *inputData,int typeL,CDataBlob *outputData);
 //待实现
 bool MaxPool2d(CDataBlob *inputData,maxFilters *filters, CDataBlob *outputData);
+bool Linear();
+
 
 bool ConvTranspose2d();
 bool BatchNorm2d();
@@ -103,8 +123,8 @@ bool RNN();
 bool LSTM();
 bool GRU();
 bool Embedding();
-bool Linear();
+
 bool Sigmoid();
-bool ReLU();
+
 
 #endif // WCNN_H
