@@ -4,18 +4,22 @@
 #include <iostream>
 using namespace std;
 
+typedef   vector<double>  Tensor1f;
+typedef   vector<vector<double>>  Tensor2f;
+typedef   vector<vector<vector<double>>>  Tensor3f;
+typedef   vector<vector<vector<vector<double>>>>  Tensor4f;
 //定义WMat结构体
 class CDataBlob{
 public:
     //公共变量
     int batchsize;
 
-    vector<vector<double>>dense_float;//全链接数据
+    Tensor2f dense_float;//全连接数据
     //dense格式
     int out_features;
     int in_features;
 
-    vector<vector<vector<vector<double>>>>data_float;//图像数据
+    Tensor4f data_float;//图像数据
     //宽高
     int height;
     int width;
