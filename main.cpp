@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include <QDebug>
+#include <iostream>
 #include "wcnn.h"
 //测试卷积
 void testCov(){
@@ -76,8 +77,46 @@ void testCov(){
     Conv2d(&inputData,&weigth,&bias,&filters, &outputData);
     qDebug()<<outputData.data_float;
 }
+
+//template <typename Tp>
+//using myVec = vector<Tp>;
+
 int main(int argc, char *argv[])
 {
+	vector<double> kernel{ 1.0, 1.0 };
+	vector<double> vec{0.8, 0.364};
+	vector<double> mult;
+	std::transform(kernel.begin(), kernel.end(), vec.begin(), std::back_inserter(mult), std::multiplies<double>());
+	const std::vector<double> v{ 1.0, 2.0, 3.0, 4.0, 5.0, 1.0, 2.0, 3.0, 4.0, 5.0 };
+
+	auto biggest = std::max_element(std::cbegin(v), std::cend(v));
+	std::cout << "aa" << typeid(biggest).name() << std::endl;
+	auto au = 9 / 2;
+	CDataBlob input(1, 2, 8, 8);
+	input.data_float = { { 
+						{ { 0.7806, 0.1144, 0.2359, 0.3974, 0.5226, 0.1122, 0.5217, 0.7111 },
+						{ 0.9819, 0.2203, 0.1389, 0.8409, 0.7898, 0.9231, 0.5383, 0.2672 },
+						{ 0.1799, 0.0879, 0.5555, 0.7010, 0.8822, 0.9760, 0.5518, 0.9074 },
+						{ 0.6279, 0.2893, 0.5922, 0.8142, 0.1963, 0.8402, 0.0837, 0.0335 },
+						{ 0.7927, 0.5866, 0.1312, 0.0621, 0.4014, 0.6445, 0.0426, 0.4867 },
+						{ 0.8103, 0.6106, 0.1620, 0.6706, 0.3666, 0.8752, 0.4540, 0.3589 },
+						{ 0.1180, 0.4366, 0.3363, 0.7593, 0.9605, 0.0609, 0.2817, 0.8587 },
+						{ 0.6828, 0.0024, 0.4131, 0.7371, 0.5852, 0.3887, 0.3838, 0.0428 } },
+
+						{ { 0.7663, 0.9236, 0.5231, 0.8728, 0.2985, 0.7798, 0.8019, 0.8220 },
+						{ 0.3009, 0.1610, 0.4365, 0.2582, 0.9125, 0.8900, 0.7145, 0.3426 },
+						{ 0.7688, 0.7401, 0.8362, 0.8875, 0.1657, 0.8641, 0.2714, 0.9904 },
+						{ 0.5041, 0.6628, 0.2526, 0.7577, 0.7930, 0.2275, 0.0978, 0.6620 },
+						{ 0.4815, 0.8503, 0.5579, 0.3074, 0.6134, 0.8671, 0.1788, 0.7941 },
+						{ 0.8077, 0.9856, 0.8386, 0.8819, 0.9215, 0.3613, 0.6352, 0.6687 },
+						{ 0.2495, 0.6221, 0.8385, 0.0518, 0.1051, 0.9036, 0.3022, 0.0488 },
+						{ 0.0917, 0.0643, 0.2964, 0.9249, 0.6331, 0.6122, 0.7403, 0.1357 } } 
+						} };
+	
+	maxFilters maxfilter(2, 2, 3, 3, 0, 0, 2, 2, false, true);
+	CDataBlob output;
+	bool flag = MaxPool2d(&input, &maxfilter, &output);
+	qDebug() << "output: " << output.data_float;
     QCoreApplication a(argc, argv);
     testCov();
     return a.exec();
