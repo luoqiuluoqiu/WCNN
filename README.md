@@ -5,7 +5,21 @@
 
 ## 已经实现
 1. Conv2d
+2. MaxPool2d
+3. Relu
+4. Linear
 
 
 ##待实现
-1. MaxPool2d
+
+
+- ConvTranspose2d();
+- BatchNorm2d();
+- InstanceNorm2d();
+- UpsamplingNearest2d();
+- UpsamplingBilinear2d();
+- RNN();
+- LSTM();
+- GRU();
+- Embedding();
+- Sigmoid();
